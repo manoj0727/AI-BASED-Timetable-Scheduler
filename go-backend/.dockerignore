@@ -1,0 +1,25 @@
+# Ignore git files
+.git
+.gitignore
+
+# Ignore documentation
+*.md
+README.md
+
+# Ignore tests
+*_test.go
+
+# Ignore local environment
+.env.local
+.env.development
+
+# Ignore build artifacts
+main
+*.exe
+*.out
+
+# Ignore IDE files
+.vscode
+.idea
+*.swp
+*.swo

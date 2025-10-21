@@ -114,6 +114,7 @@ func SetupRoutes(api fiber.Router, cfg *config.Config) {
 
 		// Conflicts
 		timetables.Get("/:id/conflicts", GetConflicts)
+		timetables.Post("/check-conflicts", CheckConflicts)
 		timetables.Post("/conflicts/:conflictId/resolve", ResolveConflict)
 	}
 

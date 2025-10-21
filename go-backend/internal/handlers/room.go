@@ -3,7 +3,6 @@ package handlers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 	"github.com/yourusername/timetable-scheduler/internal/database"
 	"github.com/yourusername/timetable-scheduler/internal/models"
 )
@@ -95,11 +94,6 @@ func CreateRoom(c *fiber.Ctx) error {
 		return c.Status(409).JSON(fiber.Map{
 			"error": "Room with this number already exists in this building",
 		})
-	}
-
-	// Initialize features if nil
-	if room.Features == nil {
-		room.Features = pq.StringArray{}
 	}
 
 	result := database.DB.Create(&room)

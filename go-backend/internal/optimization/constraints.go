@@ -15,7 +15,7 @@ func (c *NoFacultyDoubleBooking) Evaluate(solution *Solution) (bool, float64) {
 		timeKey := string(rune(slot)) + ":" + assignment.StartTime + "-" + assignment.EndTime
 
 		if existing, found := facultySchedule[key]; found {
-			for _, existingSlot := range existing {
+			for range existing {
 				// Check for overlap
 				violations++
 			}

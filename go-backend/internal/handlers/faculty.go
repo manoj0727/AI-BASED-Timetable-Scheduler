@@ -321,7 +321,7 @@ func GetFacultyExpertise(c *fiber.Ctx) error {
 		})
 	}
 
-	var expertise []models.FacultyExpertise
+	var expertise []models.FacultyCourseExpertise
 	result := database.DB.Preload("Course").Where("faculty_id = ?", facultyID).Find(&expertise)
 	if result.Error != nil {
 		return c.Status(500).JSON(fiber.Map{
@@ -354,7 +354,7 @@ func AddFacultyExpertise(c *fiber.Ctx) error {
 		})
 	}
 
-	var expertise models.FacultyExpertise
+	var expertise models.FacultyCourseExpertise
 	if err := c.BodyParser(&expertise); err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"error": "Invalid request body",
@@ -372,7 +372,7 @@ func AddFacultyExpertise(c *fiber.Ctx) error {
 	}
 
 	// Check for duplicate
-	var existing models.FacultyExpertise
+	var existing models.FacultyCourseExpertise
 	if err := database.DB.Where("faculty_id = ? AND course_id = ?", facultyID, expertise.CourseID).First(&existing).Error; err == nil {
 		return c.Status(409).JSON(fiber.Map{
 			"error": "This expertise already exists",
@@ -407,7 +407,7 @@ func DeleteFacultyExpertise(c *fiber.Ctx) error {
 		})
 	}
 
-	result := database.DB.Where("id = ? AND faculty_id = ?", expID, facultyID).Delete(&models.FacultyExpertise{})
+	result := database.DB.Where("id = ? AND faculty_id = ?", expID, facultyID).Delete(&models.FacultyCourseExpertise{})
 	if result.Error != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"error": "Failed to delete expertise",

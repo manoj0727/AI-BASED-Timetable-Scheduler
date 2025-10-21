@@ -1,25 +1,13 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import {
   Calendar,
-  BookOpen,
-  Users,
-  Building,
-  GraduationCap,
-  UserCircle,
-  Home,
   Menu,
   X
 } from 'lucide-react'
 import { useState } from 'react'
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: Home },
-  { name: 'Timetables', href: '/timetables', icon: Calendar },
-  { name: 'Programs', href: '/programs', icon: GraduationCap },
-  { name: 'Courses', href: '/courses', icon: BookOpen },
-  { name: 'Faculty', href: '/faculty', icon: Users },
-  { name: 'Students', href: '/students', icon: UserCircle },
-  { name: 'Rooms', href: '/rooms', icon: Building },
+  { name: 'Scheduler', href: '/', icon: Calendar },
 ]
 
 export default function Layout() {

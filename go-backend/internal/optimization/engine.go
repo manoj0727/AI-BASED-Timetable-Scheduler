@@ -105,7 +105,7 @@ func (e *TimetableEngine) AddConstraint(name string, constraint Constraint) {
 
 // Generate runs the optimization algorithm
 func (e *TimetableEngine) Generate(ctx context.Context) (*Solution, error) {
-	startTime := time.Now()
+	// startTime := time.Now() // TODO: use for metrics
 
 	// Create timeout context
 	timeoutCtx, cancel := context.WithTimeout(ctx, e.config.Timeout)

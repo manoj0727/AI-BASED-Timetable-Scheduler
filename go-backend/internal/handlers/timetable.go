@@ -680,3 +680,43 @@ func timePtr(t time.Time) *time.Time {
 func strPtr(s string) *string {
 	return &s
 }
+
+// GetGenerationStatus retrieves the status of timetable generation
+func GetGenerationStatus(c *fiber.Ctx) error {
+	return c.JSON(fiber.Map{
+		"message": "Get generation status - to be implemented",
+	})
+}
+
+// ResolveConflict marks a conflict as resolved
+func ResolveConflict(c *fiber.Ctx) error {
+	return c.JSON(fiber.Map{
+		"message": "Resolve conflict - to be implemented",
+	})
+}
+
+// ExportTimetablePDF exports timetable as PDF
+func ExportTimetablePDF(c *fiber.Ctx) error {
+	return c.JSON(fiber.Map{
+		"message": "Export PDF - to be implemented",
+	})
+}
+
+// ExportTimetableExcel exports timetable as Excel
+func ExportTimetableExcel(c *fiber.Ctx) error {
+	return c.JSON(fiber.Map{
+		"message": "Export Excel - to be implemented",
+	})
+}
+
+func GetFacultyWorkloadReport(c *fiber.Ctx) error {
+	return c.JSON(fiber.Map{"message": "Faculty workload report - to be implemented"})
+}
+
+func GetRoomUtilizationReport(c *fiber.Ctx) error {
+	return c.JSON(fiber.Map{"message": "Room utilization report - to be implemented"})
+}
+
+func GetCourseDistributionReport(c *fiber.Ctx) error {
+	return c.JSON(fiber.Map{"message": "Course distribution report - to be implemented"})
+}

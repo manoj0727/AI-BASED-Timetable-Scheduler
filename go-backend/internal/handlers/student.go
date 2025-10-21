@@ -77,7 +77,7 @@ func CreateStudent(c *fiber.Ctx) error {
 	}
 
 	// Validation
-	if student.RollNumber == "" || student.FirstName == "" || student.LastName == "" {
+	if student.StudentID == "" || student.FirstName == "" || student.LastName == "" {
 		return c.Status(400).JSON(fiber.Map{
 			"error": "Roll number, first name, and last name are required",
 		})
@@ -91,7 +91,7 @@ func CreateStudent(c *fiber.Ctx) error {
 
 	// Check for duplicate roll number
 	var existing models.Student
-	if err := database.DB.Where("roll_number = ?", student.RollNumber).First(&existing).Error; err == nil {
+	if err := database.DB.Where("roll_number = ?", student.StudentID).First(&existing).Error; err == nil {
 		return c.Status(409).JSON(fiber.Map{
 			"error": "Student with this roll number already exists",
 		})
@@ -139,7 +139,7 @@ func UpdateStudent(c *fiber.Ctx) error {
 	}
 
 	// Store originals to check for duplicates
-	originalRollNumber := student.RollNumber
+	originalStudentID := student.StudentID
 	originalEmail := student.Email
 
 	if err := c.BodyParser(&student); err != nil {
@@ -149,9 +149,9 @@ func UpdateStudent(c *fiber.Ctx) error {
 	}
 
 	// Check for duplicate roll number if changed
-	if student.RollNumber != originalRollNumber {
+	if student.StudentID != originalStudentID {
 		var existing models.Student
-		if err := database.DB.Where("roll_number = ? AND id != ?", student.RollNumber, studentID).First(&existing).Error; err == nil {
+		if err := database.DB.Where("roll_number = ? AND id != ?", student.StudentID, studentID).First(&existing).Error; err == nil {
 			return c.Status(409).JSON(fiber.Map{
 				"error": "Student with this roll number already exists",
 			})
@@ -223,7 +223,7 @@ func GetStudentEnrollments(c *fiber.Ctx) error {
 		})
 	}
 
-	var enrollments []models.Enrollment
+	var enrollments []models.StudentEnrollment
 	result := database.DB.
 		Preload("Course").
 		Preload("Semester").
@@ -261,7 +261,7 @@ func EnrollStudent(c *fiber.Ctx) error {
 		})
 	}
 
-	var enrollment models.Enrollment
+	var enrollment models.StudentEnrollment
 	if err := c.BodyParser(&enrollment); err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"error": "Invalid request body",
@@ -287,7 +287,7 @@ func EnrollStudent(c *fiber.Ctx) error {
 	}
 
 	// Check for duplicate enrollment
-	var existing models.Enrollment
+	var existing models.StudentEnrollment
 	if err := database.DB.Where("student_id = ? AND course_id = ? AND semester_id = ?",
 		studentID, enrollment.CourseID, enrollment.SemesterID).First(&existing).Error; err == nil {
 		return c.Status(409).JSON(fiber.Map{
@@ -323,7 +323,7 @@ func DeleteEnrollment(c *fiber.Ctx) error {
 		})
 	}
 
-	result := database.DB.Where("id = ? AND student_id = ?", enrID, studentID).Delete(&models.Enrollment{})
+	result := database.DB.Where("id = ? AND student_id = ?", enrID, studentID).Delete(&models.StudentEnrollment{})
 	if result.Error != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"error": "Failed to delete enrollment",
